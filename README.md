@@ -45,3 +45,9 @@ git commit -m <write_your_commit_message>
 ```
 git push
 ```
+
+## For cloning my repo use below command
+
+```
+git clone https://github.com/itsurkunal/DOCUMENT_PORTAL.git
+```

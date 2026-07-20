@@ -51,3 +51,10 @@ git push
 ```
 git clone https://github.com/itsurkunal/DOCUMENT_PORTAL.git
 ```
+
+## Minimum requirement for this project
+1. LLM Model ## groq(freely), openai(paid), gemini(15 days free access), claude(paid), huggingface(freely), ollama(local setup)
+
+2. Embedding Model ## openai, gemini, hf
+
+3. vectordatase ##inmemory ##ondisk ##cloudbased

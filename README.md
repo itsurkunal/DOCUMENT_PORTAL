@@ -58,3 +58,15 @@ git clone https://github.com/itsurkunal/DOCUMENT_PORTAL.git
 2. Embedding Model ## openai, gemini, hf
 
 3. vectordatase ##inmemory ##ondisk ##cloudbased
+
+
+## GROQ API KEY LINK
+```
+https://console.groq.com/keys
+```
+
+## GEMINI API KEY LINK
+```
+https://aistudio.google.com/api-keys
+```
+

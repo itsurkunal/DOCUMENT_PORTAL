@@ -11,6 +11,11 @@ from exception.custom_exception import DocumentPortalException
 
 class ApiKeyManager:
     REQUIRED_KEYS = ["GROQ_API_KEY", "GOOGLE_API_KEY"]
+    GOOGLE_KEY_ALIASES = ("GOOGLE_API_KEY", "GEMINI_API_KEY")
+    KEY_ALIASES = {
+        "GOOGLE_API_KEY": ("GOOGLE_API_KEY", "GEMINI_API_KEY"),
+        "GEMINI_API_KEY": ("GEMINI_API_KEY", "GOOGLE_API_KEY"),
+    }
 
     def __init__(self):
         self.api_keys = {}
@@ -34,6 +39,16 @@ class ApiKeyManager:
                     self.api_keys[key] = env_val
                     log.info(f"Loaded {key} from individual env var")
 
+        # Support renamed Gemini env var without breaking existing code paths
+        google_key = None
+        for alias in self.GOOGLE_KEY_ALIASES:
+            google_key = self.api_keys.get(alias) or os.getenv(alias)
+            if google_key:
+                self.api_keys["GOOGLE_API_KEY"] = google_key
+                if alias != "GOOGLE_API_KEY":
+                    log.info(f"Loaded Google/Gemini API key from {alias}")
+                break
+
         # Final check
         missing = [k for k in self.REQUIRED_KEYS if not self.api_keys.get(k)]
         if missing:
@@ -44,10 +59,13 @@ class ApiKeyManager:
 
 
     def get(self, key: str) -> str:
-        val = self.api_keys.get(key)
-        if not val:
-            raise KeyError(f"API key for {key} is missing")
-        return val
+        aliases = self.KEY_ALIASES.get(key, (key,))
+        for alias in aliases:
+            val = self.api_keys.get(alias) or os.getenv(alias)
+            if val:
+                self.api_keys[key] = val
+                return val
+        raise KeyError(f"API key for {key} is missing")
 
 
 class ModelLoader:

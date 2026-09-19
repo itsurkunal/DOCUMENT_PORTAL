@@ -6,6 +6,6 @@ __pycache__/
 logs/
 *.pyc
 data/
-test.py
+# test.py
 tmp_logger_check.py
 test_logger.py

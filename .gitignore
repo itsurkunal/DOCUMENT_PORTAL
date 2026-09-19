@@ -7,3 +7,5 @@ logs/
 *.pyc
 data/
 test.py
+tmp_logger_check.py
+test_logger.py
